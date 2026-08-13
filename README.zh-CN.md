@@ -4,7 +4,7 @@
 
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
-[![CI](https://github.com/sixtdreanight/vibe-coding-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/sixtdreanight/vibe-coding-agent/actions/workflows/ci.yml)
+[![CI](https://github.com/dreamnight16/vibe-coding-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/dreamnight16/vibe-coding-agent/actions/workflows/ci.yml)
 [![在线体验](https://socialistic.ai/api/embed/dreamcode-vibe-curriculum-6a796a?lang=zh)](https://socialistic.ai/zh/skill/dreamcode-vibe-curriculum-6a796a)
 
 一个面向零基础学习者的 AI 辅助编程（Vibe Coding）互动教学网站。22 节课涵盖 7 个章节，内置 AI 助教、游戏化系统、Prompt Playground 可直接生成可运行的代码。
@@ -160,7 +160,7 @@ docker compose up -d
 
 ## 相关项目
 
-- [Blog-mizuki](https://github.com/sixtdreanight/Blog-mizuki) — 作者个人博客，更多 Vibe Coding 相关文章
+- [Blog-mizuki](https://github.com/dreamnight16/Blog-mizuki) — 作者个人博客，更多 Vibe Coding 相关文章
 
 ## License
 

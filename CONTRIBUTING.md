@@ -5,7 +5,7 @@ Thanks for your interest in contributing!
 ## Getting Started
 
 ```bash
-git clone https://github.com/sixtdreanight/vibe-coding-agent.git
+git clone https://github.com/dreamnight16/vibe-coding-agent.git
 cd vibe-coding-agent
 npm install
 cp .env.example .env.local  # configure your AI provider
@@ -59,6 +59,6 @@ Types: `feat` `fix` `refactor` `test` `docs` `chore` `perf` `ci`
 
 ## Questions?
 
-Open a [discussion](https://github.com/sixtdreanight/vibe-coding-agent/discussions).
+Open a [discussion](https://github.com/dreamnight16/vibe-coding-agent/discussions).
 
 [conv]: https://www.conventionalcommits.org/

@@ -209,7 +209,21 @@ async function callAIService(
 
 export async function POST(req: NextRequest) {
   // CSRF is handled by middleware (Origin validation for POST/PUT/DELETE).
-  // The AI_API_KEY guard below protects the actual AI service call.
+  // API 认证：与 /api/review、/api/storage 一致，防止未授权调用付费 AI 服务。
+  const authToken = process.env.AI_API_AUTH_TOKEN;
+  if (!authToken) {
+    return new Response(
+      JSON.stringify({ error: "Server not configured: AI_API_AUTH_TOKEN is required" }),
+      { status: 500, headers: { "Content-Type": "application/json" } },
+    );
+  }
+  const auth = req.headers.get("Authorization");
+  if (!auth || auth !== `Bearer ${authToken}`) {
+    return new Response(
+      JSON.stringify({ error: "Unauthorized" }),
+      { status: 401, headers: { "Content-Type": "application/json" } },
+    );
+  }
 
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
     || req.headers.get("x-real-ip")

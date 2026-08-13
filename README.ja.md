@@ -4,7 +4,7 @@
 
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
-[![CI](https://github.com/sixtdreanight/vibe-coding-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/sixtdreanight/vibe-coding-agent/actions/workflows/ci.yml)
+[![CI](https://github.com/dreamnight16/vibe-coding-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/dreamnight16/vibe-coding-agent/actions/workflows/ci.yml)
 [![オンラインで試す](https://socialistic.ai/api/embed/dreamcode-vibe-curriculum-6a796a?lang=ja)](https://socialistic.ai/ja/skill/dreamcode-vibe-curriculum-6a796a)
 
 ゼロから学べる AI アシストプログラミング（Vibe Coding）のインタラクティブな学習サイトです。7 章 22 レッスンで段階的に学習でき、AI チューター、ゲーミフィケーションシステム、コードを直接生成できる Prompt Playground を備えています。
@@ -160,7 +160,7 @@ docker compose up -d
 
 ## 関連プロジェクト
 
-- [Blog-mizuki](https://github.com/sixtdreanight/Blog-mizuki) — 著者の個人ブログ、Vibe Coding に関する記事多数
+- [Blog-mizuki](https://github.com/dreamnight16/Blog-mizuki) — 著者の個人ブログ、Vibe Coding に関する記事多数
 
 ## License
 
