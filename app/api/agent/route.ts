@@ -207,9 +207,22 @@ async function callAIService(
   });
 }
 
+function getClientIP(req: NextRequest): string {
+  // 仅当部署在可信反向代理之后（TRUST_PROXY=true，代理会覆盖/剥离转发头）时，
+  // 才信任 x-forwarded-for / x-real-ip。直接暴露时这些头可被客户端伪造，不能用于
+  // 限流；此时回退到 Next.js 从可信连接推导的 socket 地址（req.ip）。
+  if (process.env.TRUST_PROXY === "true") {
+    const forwarded = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+    if (forwarded) return forwarded;
+    const realIp = req.headers.get("x-real-ip");
+    if (realIp) return realIp;
+  }
+  return req.ip || "unknown";
+}
+
 export async function POST(req: NextRequest) {
   // CSRF is handled by middleware (Origin validation for POST/PUT/DELETE).
-  // API 认证：与 /api/review、/api/storage 一致，防止未授权调用付费 AI 服务。
+  // API 认证：与 /api/review 一致，防止未授权调用付费 AI 服务。
   const authToken = process.env.AI_API_AUTH_TOKEN;
   if (!authToken) {
     return new Response(
@@ -225,9 +238,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
-    || req.headers.get("x-real-ip")
-    || "unknown";
+  const ip = getClientIP(req);
   if (!checkRateLimit(ip)) {
     return new Response(
       JSON.stringify({ error: "请求过于频繁，请稍后再试" }),
