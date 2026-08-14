@@ -2,23 +2,30 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { lessons } from "@/lib/lessons";
 import { BookOpen, Circle, Menu, X, ChevronRight, Sparkles, FolderOpen, BarChart3 } from "lucide-react";
-import { loadProgress } from "@/lib/progress";
+import { loadProgress, subscribe } from "@/lib/progress";
+
+function buildProgressMap(): Record<string, boolean> {
+  const p = loadProgress();
+  const map: Record<string, boolean> = {};
+  for (const [id, data] of Object.entries(p.lessons)) {
+    map[id] = data.completed;
+  }
+  return map;
+}
 
 export default function LessonNavigator() {
   const pathname = usePathname();
   const currentId = pathname.split("/").pop();
   const [open, setOpen] = useState(false);
-  const progress = useMemo<Record<string, boolean>>(() => {
-    const p = loadProgress();
-    const map: Record<string, boolean> = {};
-    for (const [id, data] of Object.entries(p.lessons)) {
-      map[id] = data.completed;
-    }
-    return map;
-  }, [pathname]);
+  const [progress, setProgress] = useState<Record<string, boolean>>(buildProgressMap);
+
+  // Keep progress in sync whenever it changes elsewhere (e.g. a lesson is completed)
+  useEffect(() => {
+    return subscribe(() => setProgress(buildProgressMap()));
+  }, []);
 
   const modules = lessons.reduce(
     (acc, lesson) => {
