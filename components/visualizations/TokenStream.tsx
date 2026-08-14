@@ -179,7 +179,7 @@ export default function TokenStream() {
       <div className="mt-4 p-3 rounded-xl bg-surface-alt border border-edge/50">
         <p className="text-xs text-muted leading-relaxed">
           <span className="font-semibold text-text-primary">原理：</span>
-          AI 就像一个超级快速的"文字接龙"机器。它根据你给的提示词，一个字一个字地预测接下来最可能是什么。
+          AI 就像一个超级快速的&ldquo;文字接龙&rdquo;机器。它根据你给的提示词，一个字一个字地预测接下来最可能是什么。
           每次预测一个 token（通常是一个词或标点），直到完成整个代码。这就是为什么你描述得越清楚，AI 生成得越准。
         </p>
       </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { loadProgress } from '@/lib/progress';
 import { calculateLevel } from '@/lib/gamification';
 import { lessons } from '@/lib/lessons';
@@ -16,9 +16,7 @@ interface StatCard {
 }
 
 export default function StatsGrid() {
-  const [stats, setStats] = useState<StatCard[]>([]);
-
-  useEffect(() => {
+  const [stats] = useState<StatCard[]>(() => {
     const progress = loadProgress();
     const gs = progress.gamification;
     const lessonVals = Object.values(progress.lessons);
@@ -30,7 +28,7 @@ export default function StatsGrid() {
 
     const daysActive = gs?.activityLog ? Object.keys(gs.activityLog).length : 0;
 
-    setStats([
+    return [
       {
         label: '完成课程',
         value: completed,
@@ -87,8 +85,8 @@ export default function StatsGrid() {
         icon: <Trophy className="w-5 h-5" />,
         color: 'text-warning',
       },
-    ]);
-  }, []);
+    ];
+  });
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-3 animate-slide-up">

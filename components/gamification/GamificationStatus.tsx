@@ -14,17 +14,17 @@ interface GamificationStatusProps {
 }
 
 export default function GamificationStatus({ compact = false, onBadgeUnlock }: GamificationStatusProps) {
-  const [gamification, setGamification] = useState<GamificationState>(emptyGamification);
+  const [gamification, setGamification] = useState<GamificationState>(
+    () => loadProgress().gamification || emptyGamification(),
+  );
   const level = calculateLevel(gamification.xp);
   const xpProgress = xpForNextLevel(gamification.xp);
   const onBadgeUnlockRef = useRef(onBadgeUnlock);
-  onBadgeUnlockRef.current = onBadgeUnlock;
 
-  // Load state on mount
+  // Keep the latest onBadgeUnlock callback available to async event handlers
   useEffect(() => {
-    const progress = loadProgress();
-    setGamification(progress.gamification || emptyGamification());
-  }, []);
+    onBadgeUnlockRef.current = onBadgeUnlock;
+  }, [onBadgeUnlock]);
 
   const updateGamification = useCallback((gs: GamificationState) => {
     setGamification(gs);

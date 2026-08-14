@@ -28,7 +28,7 @@ export default function BoxModelVisualizer() {
     <div className="card p-5 animate-slide-up">
       <div className="mb-4">
         <h3 className="font-display font-bold text-base">CSS 盒模型</h3>
-        <p className="text-[10px] text-muted">每个 HTML 元素都是一个"盒子"</p>
+        <p className="text-[10px] text-muted">每个 HTML 元素都是一个&ldquo;盒子&rdquo;</p>
       </div>
 
       {/* Toggles */}

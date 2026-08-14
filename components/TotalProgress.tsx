@@ -1,16 +1,14 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { loadProgress } from '@/lib/progress'
 import ProgressBar from './ProgressBar'
 import { Sparkles } from 'lucide-react'
 
 export default function TotalProgress({ total }: { total: number }) {
-  const [completed, setCompleted] = useState(0)
-
-  useEffect(() => {
-    setCompleted(Object.values(loadProgress().lessons).filter((l) => l.completed).length)
-  }, [])
+  const [completed] = useState(() =>
+    Object.values(loadProgress().lessons).filter((l) => l.completed).length,
+  )
 
   const pct = total > 0 ? Math.round((completed / total) * 100) : 0
   const isDone = pct === 100

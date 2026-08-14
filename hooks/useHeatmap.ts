@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { loadProgress } from '@/lib/progress';
 import { getTodayKey } from '@/lib/gamification';
 
@@ -11,10 +11,7 @@ export interface DayActivity {
 }
 
 export function useHeatmap(): { data: DayActivity[]; maxXp: number } {
-  const [data, setData] = useState<DayActivity[]>([]);
-  const [maxXp, setMaxXp] = useState(0);
-
-  useEffect(() => {
+  const [{ data, maxXp }] = useState(() => {
     const progress = loadProgress();
     const activityLog = progress.gamification?.activityLog || {};
 
@@ -32,9 +29,8 @@ export function useHeatmap(): { data: DayActivity[]; maxXp: number } {
       days.push({ date: key, xp, level });
     }
 
-    setData(days);
-    setMaxXp(maxDayXp);
-  }, []);
+    return { data: days, maxXp: maxDayXp };
+  });
 
   return { data, maxXp };
 }

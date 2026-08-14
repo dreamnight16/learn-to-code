@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { lessons } from "@/lib/lessons";
 import { BookOpen, Circle, Menu, X, ChevronRight, Sparkles, FolderOpen, BarChart3 } from "lucide-react";
 import { loadProgress } from "@/lib/progress";
@@ -11,15 +11,13 @@ export default function LessonNavigator() {
   const pathname = usePathname();
   const currentId = pathname.split("/").pop();
   const [open, setOpen] = useState(false);
-  const [progress, setProgress] = useState<Record<string, boolean>>({});
-
-  useEffect(() => {
+  const progress = useMemo<Record<string, boolean>>(() => {
     const p = loadProgress();
     const map: Record<string, boolean> = {};
     for (const [id, data] of Object.entries(p.lessons)) {
       map[id] = data.completed;
     }
-    setProgress(map);
+    return map;
   }, [pathname]);
 
   const modules = lessons.reduce(

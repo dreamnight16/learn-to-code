@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { loadProgress } from '@/lib/progress';
 import { lessons } from '@/lib/lessons';
 
@@ -10,17 +10,10 @@ interface Skill {
 }
 
 export default function SkillRadar() {
-  const [skills, setSkills] = useState<Skill[]>([]);
-  const size = 220;
-  const cx = size / 2;
-  const cy = size / 2;
-  const radius = (size / 2) - 40;
-
-  useEffect(() => {
+  const [skills] = useState<Skill[]>(() => {
     const progress = loadProgress();
     const lessonEntries = Object.entries(progress.lessons);
     const completedIds = lessonEntries.filter(([, v]) => v.completed).map(([k]) => k);
-    const passedQuizIds = lessonEntries.filter(([, v]) => v.quizCompleted && (v.quizScore || 0) >= 60).map(([k]) => k);
 
     // Calculate skill levels based on tags and progress
     const htmlLessons = lessons.filter((l) => l.tags.includes('实践') || l.tags.includes('项目'));
@@ -35,17 +28,20 @@ export default function SkillRadar() {
       return Math.round((completedInSet / lessonSet.length) * 100);
     };
 
-    setSkills([
+    return [
       { label: 'HTML/CSS', value: calcScore(htmlLessons) },
       { label: 'JavaScript', value: calcScore(jsLessons) },
       { label: '提示词', value: calcScore(promptLessons) },
       { label: '工具使用', value: calcScore(toolLessons) },
       { label: '概念理解', value: calcScore(conceptLessons) },
       { label: '动手实践', value: completedIds.length > 0 ? Math.round((completedIds.length / lessons.length) * 100) : 0 },
-    ]);
-  }, []);
+    ];
+  });
 
-  if (skills.length === 0) return null;
+  const size = 220;
+  const cx = size / 2;
+  const cy = size / 2;
+  const radius = (size / 2) - 40;
 
   const angles = skills.map((_, i) => (i * 2 * Math.PI) / skills.length - Math.PI / 2);
 

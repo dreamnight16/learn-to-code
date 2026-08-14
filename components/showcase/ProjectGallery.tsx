@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import type { SavedProject } from '@/lib/projects';
 import { loadProjects, deleteProject } from '@/lib/projects';
 import { ExternalLink, Trash2, Eye, Code2, Calendar, Sparkles, Download } from 'lucide-react';
@@ -8,14 +8,10 @@ import ExportDialog from './ExportDialog';
 import Link from 'next/link';
 
 export default function ProjectGallery() {
-  const [projects, setProjects] = useState<SavedProject[]>([]);
+  const [projects, setProjects] = useState<SavedProject[]>(() => loadProjects());
   const [selected, setSelected] = useState<SavedProject | null>(null);
   const [showExport, setShowExport] = useState(false);
   const [exportProject, setExportProject] = useState<SavedProject | null>(null);
-
-  useEffect(() => {
-    setProjects(loadProjects());
-  }, []);
 
   function handleDelete(id: string) {
     deleteProject(id);

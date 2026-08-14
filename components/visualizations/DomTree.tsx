@@ -193,7 +193,7 @@ export default function DomTree() {
       <div className="mt-4 p-3 rounded-xl bg-surface-alt border border-edge/50">
         <p className="text-xs text-muted leading-relaxed">
           <span className="font-semibold text-text-primary">原理：</span>
-          浏览器读入 HTML 后，会把它解析成一棵"树"（DOM 树）。每个标签是一个节点，嵌套关系变成父子关系。
+          浏览器读入 HTML 后，会把它解析成一棵&ldquo;树&rdquo;（DOM 树）。每个标签是一个节点，嵌套关系变成父子关系。
           树叶是文字内容，树枝是标签。浏览器根据这棵树来决定每个元素的颜色、大小和位置。
         </p>
       </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useMemo } from 'react';
 import type { AdaptiveRecommendation } from '@/lib/adaptive';
 import { getRecommendations } from '@/lib/adaptive';
 import Link from 'next/link';
@@ -22,11 +22,10 @@ interface RecommendationsProps {
 }
 
 export default function Recommendations({ lessonId, limit = 3 }: RecommendationsProps) {
-  const [recs, setRecs] = useState<AdaptiveRecommendation[]>([]);
-
-  useEffect(() => {
-    setRecs(getRecommendations(lessonId).slice(0, limit));
-  }, [lessonId, limit]);
+  const recs: AdaptiveRecommendation[] = useMemo(
+    () => getRecommendations(lessonId).slice(0, limit),
+    [lessonId, limit],
+  );
 
   if (recs.length === 0) return null;
 

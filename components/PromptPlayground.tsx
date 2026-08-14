@@ -121,7 +121,7 @@ export default function PromptPlayground() {
                   onClick={() => setPrompt(`帮我做一个${example}`)}
                   className="text-[10px] px-2 py-1 rounded-md bg-surface border border-edge text-muted hover:text-accent hover:border-accent/30 transition-colors"
                 >
-                  "{example}"
+                  &quot;{example}&quot;
                 </button>
               ))}
             </div>

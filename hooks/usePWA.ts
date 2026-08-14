@@ -9,7 +9,9 @@ interface BeforeInstallPromptEvent extends Event {
 
 export function usePWA() {
   const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
-  const [isInstalled, setIsInstalled] = useState(false);
+  const [isInstalled, setIsInstalled] = useState<boolean>(
+    () => typeof window !== 'undefined' && window.matchMedia('(display-mode: standalone)').matches,
+  );
 
   useEffect(() => {
     const handler = (e: Event) => {
@@ -18,11 +20,6 @@ export function usePWA() {
     };
     window.addEventListener('beforeinstallprompt', handler);
     window.addEventListener('appinstalled', () => setIsInstalled(true));
-
-    // Check if already installed
-    if (window.matchMedia('(display-mode: standalone)').matches) {
-      setIsInstalled(true);
-    }
 
     // Register service worker
     if ('serviceWorker' in navigator) {

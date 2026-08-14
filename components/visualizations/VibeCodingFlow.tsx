@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { Play, Pause, RotateCcw } from 'lucide-react';
 
 interface Step {
@@ -27,24 +27,16 @@ const ARROWS = [
 export default function VibeCodingFlow() {
   const [activeStep, setActiveStep] = useState(-1);
   const [running, setRunning] = useState(false);
-  const activeStepRef = useRef(activeStep);
-  const runningRef = useRef(running);
-  const timerRef = useRef<ReturnType<typeof setInterval>>(undefined);
-
-  activeStepRef.current = activeStep;
-  runningRef.current = running;
 
   useEffect(() => {
     if (!running) return;
-    timerRef.current = setInterval(() => {
-      let step = activeStepRef.current + 1;
-      if (step > STEPS.length) {
-        step = 0;
-      }
-      setActiveStep(step);
-      activeStepRef.current = step;
+    const timer = setInterval(() => {
+      setActiveStep((prev) => {
+        const step = prev + 1;
+        return step > STEPS.length ? 0 : step;
+      });
     }, 1200);
-    return () => clearInterval(timerRef.current);
+    return () => clearInterval(timer);
   }, [running]);
 
   function toggle() {
@@ -54,7 +46,6 @@ export default function VibeCodingFlow() {
   function reset() {
     setRunning(false);
     setActiveStep(-1);
-    activeStepRef.current = -1;
   }
 
   return (
