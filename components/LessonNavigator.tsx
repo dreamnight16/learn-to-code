@@ -24,7 +24,10 @@ export default function LessonNavigator() {
 
   // Keep progress in sync whenever it changes elsewhere (e.g. a lesson is completed)
   useEffect(() => {
-    return subscribe(() => setProgress(buildProgressMap()));
+    const unsubscribe = subscribe(() => setProgress(buildProgressMap()));
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   const modules = lessons.reduce(
