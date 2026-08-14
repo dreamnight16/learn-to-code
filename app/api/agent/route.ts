@@ -217,7 +217,11 @@ function getClientIP(req: NextRequest): string {
     const realIp = req.headers.get("x-real-ip");
     if (realIp) return realIp;
   }
-  return req.ip || "unknown";
+  return (
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("x-real-ip") ||
+    "unknown"
+  );
 }
 
 export async function POST(req: NextRequest) {
